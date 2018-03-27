@@ -1,0 +1,19 @@
+{
+  "name": "redux-callbag",
+  "version": "0.0.1",
+  "description": "redux callbag",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/janryWang/redux-callbag.git"
+  },
+  "author": "janryWang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/janryWang/redux-callbag/issues"
+  },
+  "homepage": "https://github.com/janryWang/redux-callbag#readme"
+}

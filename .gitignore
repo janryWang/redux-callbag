@@ -1,0 +1,10 @@
+.DS_Store
+.idea
+.vscode
+node_modules
+*.log
+TODOs.md
+explorations
+test/e2e/reports
+test/e2e/screenshots
+coverage
