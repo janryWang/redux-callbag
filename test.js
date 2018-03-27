@@ -1,17 +1,3 @@
-# redux-callbag
-
-> redux middleware for action side effects with callbag
-
-## Install
-
-```
-npm install --save 
-
-```
-
-## Usage
-
-```
 import { createStore,applyMiddleware } from 'redux'
 import {pipe,filter,forEach,map} from 'callbag-basics'
 import createCallbagMiddleware from './index'
@@ -62,42 +48,42 @@ const store = createStore(
         createCallbagMiddleware((actions,store)=>{
 
             
-            actions |>
-                filter(typeOf('ADD_SOMETHING')) |>
-                forEach(({payload})=>{
-                    console.log('log:'+payload)
-                })
-        
-
-        
-            actions |>
-                filter(typeOf('ADD_TODO')) |>
-                forEach(({payload})=>{
-                    setTimeout(()=>{
-                        store.dispatch(addSomething(payload+'  23333333'))
-                    })
-                    
-                })
-            
-            // this is not pipeline syntax usecase
-            // pipe(
-            //     actions,
-            //     filter(typeOf('ADD_SOMETHING')),
+            // actions |>
+            //     filter(typeOf('ADD_SOMETHING')) |>
             //     forEach(({payload})=>{
             //         console.log('log:'+payload)
             //     })
-            // )
+        
 
-            // pipe(
-            //     actions,
-            //     filter(typeOf('ADD_TODO')),
+        
+            // actions |>
+            //     filter(typeOf('ADD_TODO')) |>
             //     forEach(({payload})=>{
             //         setTimeout(()=>{
             //             store.dispatch(addSomething(payload+'  23333333'))
             //         })
                     
             //     })
-            // )
+            
+
+            pipe(
+                actions,
+                filter(typeOf('ADD_SOMETHING')),
+                forEach(({payload})=>{
+                    console.log('log:'+payload)
+                })
+            )
+
+            pipe(
+                actions,
+                filter(typeOf('ADD_TODO')),
+                forEach(({payload})=>{
+                    setTimeout(()=>{
+                        store.dispatch(addSomething(payload+'  23333333'))
+                    })
+                    
+                })
+            )
 
             
         })
@@ -111,6 +97,3 @@ store.subscribe(()=>{
     console.log(store.getState())
 })
 
-
-
-```

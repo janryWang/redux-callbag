@@ -4,7 +4,7 @@
   "description": "redux callbag",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "babel-node test.js --presets es2015 --plugins transform-pipeline"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,19 @@
   "bugs": {
     "url": "https://github.com/janryWang/redux-callbag/issues"
   },
-  "homepage": "https://github.com/janryWang/redux-callbag#readme"
+  "homepage": "https://github.com/janryWang/redux-callbag#readme",
+  "dependencies": {
+    "mitt": "^1.1.3"
+  },
+  "devDependencies": {
+    "babel-cli": "6.24.0",
+    "babel-core": "6.24.0",
+    "babel-preset-es2015": "6.24.0",
+    "babel-preset-stage-0": "6.22.0",
+    "babel-plugin-syntax-pipeline": "^0.1.0",
+    "babel-plugin-transform-pipeline": "^0.1.0",
+    "babel-preset-env": "^1.6.1",
+    "callbag-basics": "^3.0.0",
+    "redux": "^3.7.2"
+  }
 }
