@@ -5,7 +5,7 @@
 ## Install
 
 ```
-npm install --save 
+npm install --save  redux-callbag
 
 ```
 
@@ -14,7 +14,7 @@ npm install --save
 ```
 import { createStore,applyMiddleware } from 'redux'
 import {pipe,filter,forEach,map} from 'callbag-basics'
-import createCallbagMiddleware from './index'
+import createCallbagMiddleware from 'redux-callbag'
 
 function todos(state = [], action) {
     switch (action.type) {
