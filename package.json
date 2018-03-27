@@ -1,6 +1,6 @@
 {
   "name": "redux-callbag",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "redux callbag",
   "main": "index.js",
   "scripts": {
