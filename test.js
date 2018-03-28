@@ -48,42 +48,23 @@ const store = createStore(
         createCallbagMiddleware((actions,store)=>{
 
             
-            // actions |>
-            //     filter(typeOf('ADD_SOMETHING')) |>
-            //     forEach(({payload})=>{
-            //         console.log('log:'+payload)
-            //     })
-        
-
-        
-            // actions |>
-            //     filter(typeOf('ADD_TODO')) |>
-            //     forEach(({payload})=>{
-            //         setTimeout(()=>{
-            //             store.dispatch(addSomething(payload+'  23333333'))
-            //         })
-                    
-            //     })
-            
-
-            pipe(
-                actions,
-                filter(typeOf('ADD_SOMETHING')),
+            actions |>
+                filter(typeOf('ADD_SOMETHING')) |>
                 forEach(({payload})=>{
                     console.log('log:'+payload)
                 })
-            )
+        
 
-            pipe(
-                actions,
-                filter(typeOf('ADD_TODO')),
+        
+            actions |>
+                filter(typeOf('ADD_TODO')) |>
                 forEach(({payload})=>{
                     setTimeout(()=>{
                         store.dispatch(addSomething(payload+'  23333333'))
                     })
                     
                 })
-            )
+       
 
             
         })
