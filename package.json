@@ -1,10 +1,11 @@
 {
   "name": "redux-callbag",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "redux callbag",
-  "main": "index.js",
+  "main": "./lib",
   "scripts": {
-    "test": "babel-node test.js --presets @babel/preset-env --plugins @babel/plugin-proposal-pipeline-operator"
+    "test": "babel-node test.js --presets @babel/preset-env --plugins @babel/plugin-proposal-pipeline-operator",
+    "build":"babel index.js --out-dir lib  --presets @babel/preset-env --plugins @babel/plugin-proposal-pipeline-operator"
   },
   "repository": {
     "type": "git",
