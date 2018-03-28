@@ -1,6 +1,7 @@
 # redux-callbag
 
-> redux middleware for action side effects with [callbag](https://github.com/callbag/callbag)
+> Redux middleware for action side effects with [callbag](https://github.com/callbag/callbag)
+> You may not need redux-saga/redux-observable
 
 ## Install
 
