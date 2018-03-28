@@ -64,7 +64,26 @@ const store = createStore(
                     })
                     
                 })
-       
+            
+
+            // pipe(
+            //     actions,
+            //     filter(typeOf('ADD_SOMETHING')),
+            //     forEach(({payload})=>{
+            //         console.log('log:'+payload)
+            //     })
+            // )
+
+            // pipe(
+            //     actions,
+            //     filter(typeOf('ADD_TODO')),
+            //     forEach(({payload})=>{
+            //         setTimeout(()=>{
+            //             store.dispatch(addSomething(payload+'  23333333'))
+            //         })
+                    
+            //     })
+            // )
 
             
         })
