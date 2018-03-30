@@ -1,4 +1,4 @@
-# redux-callbag
+# <img src="./logo.jpg" width="400">
 
 > Redux middleware for action side effects with [callbag](https://github.com/callbag/callbag)
 >
@@ -12,111 +12,123 @@
 npm install --save  redux-callbag
 ```
 
+
+
 ## Usage
 
 ```
-import { createStore,applyMiddleware } from 'redux'
-import {pipe,filter,forEach,map} from 'callbag-basics'
-import createCallbagMiddleware from 'redux-callbag'
+import { createStore, applyMiddleware } from "redux"
+import { pipe, filter, forEach, map } from "callbag-basics"
+import createCallbagMiddleware, {
+    select,
+    mapFromPromise,
+    mapSuccessTo,
+    mapFailTo
+} from "./index"
+import delay from 'callbag-delay'
 
-function todos(state = [], action) {
+const  todos = (state = [], action)=> {
     switch (action.type) {
-      case 'ADD_TODO':
-        return state.concat([action.payload])
-      case 'REMOVE_TODO':
-        return []
-      case 'ADD_SOMETHING':
-        return state.concat([action.payload])
-      default:
-        return state
+        case "ADD_TODO":
+            return state.concat([action.payload])
+        case "REMOVE_TODO":
+            return []
+        case "ADD_SOMETHING":
+            return state.concat([action.payload])
+        default:
+            return state
     }
 }
 
-function addTodo(payload){
+const addTodo = (payload)=> {
     return {
-        type:'ADD_TODO',
+        type: "ADD_TODO",
         payload
     }
 }
 
-function addSomething(payload){
+const addSomething = (payload)=> {
     return {
-        type:'ADD_SOMETHING',
+        type: "ADD_SOMETHING",
         payload
     }
 }
 
-function removeTodo(){
+const removeTodo = ()=> {
     return {
-        type:'REMOVE_TODO'
+        type: "REMOVE_TODO"
     }
 }
 
-const typeOf =(_type)=>{
-    return ({type})=>{
-        return type === _type
-    }
-}
+
 
 const store = createStore(
     todos,
-    ['Hello world'],
+    ["Hello world"],
     applyMiddleware(
-        createCallbagMiddleware((actions,store)=>{
-
-            
-            actions |>
-                filter(typeOf('ADD_SOMETHING')) |>
-                forEach(({payload})=>{
-                    console.log('log:'+payload)
+        createCallbagMiddleware((actions, store) => {
+            actions
+                |> select("ADD_SOMETHING")
+                |> delay(1000)
+                |> forEach(({ payload }) => {
+                    console.log("log:" + payload)
                 })
-        
 
-        
-            actions |>
-                filter(typeOf('ADD_TODO')) |>
-                forEach(({payload})=>{
-                    setTimeout(()=>{
-                        store.dispatch(addSomething(payload+'  23333333'))
-                    })
-                    
-                })
-            
-            // this is not pipeline syntax usecase
-            // pipe(
-            //     actions,
-            //     filter(typeOf('ADD_SOMETHING')),
-            //     forEach(({payload})=>{
-            //         console.log('log:'+payload)
-            //     })
-            // )
-
-            // pipe(
-            //     actions,
-            //     filter(typeOf('ADD_TODO')),
-            //     forEach(({payload})=>{
-            //         setTimeout(()=>{
-            //             store.dispatch(addSomething(payload+'  23333333'))
-            //         })
-                    
-            //     })
-            // )
-
-            
+            actions
+                |> select("ADD_TODO")
+                |> delay(1000)
+                |> mapSuccessTo("ADD_SOMETHING",(payload)=>payload + "  23333333")
         })
     )
 )
 
-store.dispatch(addTodo('Hello redux'))
-store.dispatch(addSomething('This will not add numbers'))
+store.dispatch(addTodo("Hello redux"))
+store.dispatch(addSomething("This will not add numbers"))
+
+console.log(store.getState())
 
 store.subscribe(()=>{
     console.log(store.getState())
 })
 
 
-
 ```
+
+
+
+## API
+
+
+
+### `createCallbagMiddleware([...epics : Array<(actions : Function,store : Object) {} ：any>]) : Function`
+
+> This API is used to create middleware
+
+
+
+### `select(actionType : String , [mapFn : Function<(payload : any){} : any>]) : Function`
+
+> This API is used to select action
+
+
+
+### `mapFromPromise(mapFn : Function<(payload : any) {} : any>) : Function `
+
+> This API is used to insert promise flow
+
+
+
+### `mapSuccessTo(actionType : String , [mapFn : Function<(payload : any) {} : any])`
+
+> This API is used to dispatch action when callbags chain is successed
+
+
+
+###`mapFailTo(actionType : String , [mapFn : Function<(payload : any) {} : any])`
+
+> This API is used to dispatch action when callbags chain is failed
+
+
 
 ### LICENSE
 

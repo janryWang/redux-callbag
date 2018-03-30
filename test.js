@@ -1,8 +1,14 @@
 import { createStore, applyMiddleware } from "redux"
 import { pipe, filter, forEach, map } from "callbag-basics"
-import createCallbagMiddleware from "./index"
+import createCallbagMiddleware, {
+    select,
+    mapFromPromise,
+    mapSuccessTo,
+    mapFailTo
+} from "./index"
+import delay from 'callbag-delay'
 
-function todos(state = [], action) {
+const  todos = (state = [], action)=> {
     switch (action.type) {
         case "ADD_TODO":
             return state.concat([action.payload])
@@ -15,31 +21,27 @@ function todos(state = [], action) {
     }
 }
 
-function addTodo(payload) {
+const addTodo = (payload)=> {
     return {
         type: "ADD_TODO",
         payload
     }
 }
 
-function addSomething(payload) {
+const addSomething = (payload)=> {
     return {
         type: "ADD_SOMETHING",
         payload
     }
 }
 
-function removeTodo() {
+const removeTodo = ()=> {
     return {
         type: "REMOVE_TODO"
     }
 }
 
-const typeOf = _type => {
-    return ({ type }) => {
-        return type === _type
-    }
-}
+
 
 const store = createStore(
     todos,
@@ -47,37 +49,16 @@ const store = createStore(
     applyMiddleware(
         createCallbagMiddleware((actions, store) => {
             actions
-                |> filter(typeOf("ADD_SOMETHING"))
+                |> select("ADD_SOMETHING")
+                |> delay(1000)
                 |> forEach(({ payload }) => {
                     console.log("log:" + payload)
                 })
 
             actions
-                |> filter(typeOf("ADD_TODO"))
-                |> forEach(({ payload }) => {
-                    setTimeout(() => {
-                        store.dispatch(addSomething(payload + "  23333333"))
-                    })
-                })
-
-            // pipe(
-            //     actions,
-            //     filter(typeOf('ADD_SOMETHING')),
-            //     forEach(({payload})=>{
-            //         console.log('log:'+payload)
-            //     })
-            // )
-
-            // pipe(
-            //     actions,
-            //     filter(typeOf('ADD_TODO')),
-            //     forEach(({payload})=>{
-            //         setTimeout(()=>{
-            //             store.dispatch(addSomething(payload+'  23333333'))
-            //         })
-
-            //     })
-            // )
+                |> select("ADD_TODO")
+                |> delay(1000)
+                |> mapSuccessTo("ADD_SOMETHING",(payload)=>payload + "  23333333")
         })
     )
 )
@@ -85,6 +66,8 @@ const store = createStore(
 store.dispatch(addTodo("Hello redux"))
 store.dispatch(addSomething("This will not add numbers"))
 
-store.subscribe(() => {
+console.log(store.getState())
+
+store.subscribe(()=>{
     console.log(store.getState())
 })
