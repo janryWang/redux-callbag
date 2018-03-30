@@ -124,7 +124,7 @@ store.subscribe(()=>{
 
 
 
-###`mapFailTo(actionType : String , [mapFn : Function<(payload : any) {} : any])`
+### `mapFailTo(actionType : String , [mapFn : Function<(payload : any) {} : any])`
 
 > This API is used to dispatch action when callbags chain is failed
 
