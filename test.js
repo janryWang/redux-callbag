@@ -5,7 +5,7 @@ import createCallbagMiddleware, {
     mapFromPromise,
     mapSuccessTo,
     mapFailTo
-} from "./index"
+} from "./src"
 import delay from 'callbag-delay'
 
 const  todos = (state = [], action)=> {
