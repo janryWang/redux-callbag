@@ -2,7 +2,11 @@
 
 > Redux middleware for action side effects with [callbag](https://github.com/callbag/callbag)
 >
-> You may not need redux-saga/redux-observable
+> You may not need redux-saga/redux-observable. When you use redux-callbag, you will find that this's what you want.
+>
+> - 🙀 Minisize
+> - 🙀 Scalable
+> - 🙀 Easy to understand
 
 
 
@@ -100,33 +104,43 @@ store.subscribe(()=>{
 
 
 
-### `createCallbagMiddleware([...epics : Array<(actions : Function,store : Object) {} ：any>]) : Function`
+#### `createCallbagMiddleware([...epics : Array<(actions : Function,store : Object) {} ：any>]) : Function`
 
 > This API is used to create middleware
 
 
 
-### `select(actionType : String , [mapFn : Function<(payload : any){} : any>]) : Function`
+#### `select(actionType : String , [mapFn : Function<(payload : any){} : any>]) : Function`
 
 > This API is used to select action
 
 
 
-### `mapFromPromise(mapFn : Function<(payload : any) {} : any>) : Function `
+#### `mapFromPromise(mapFn : Function<(payload : any) {} : any>) : Function `
 
 > This API is used to insert promise flow
 
 
 
-### `mapSuccessTo(actionType : String , [mapFn : Function<(payload : any) {} : any])`
+#### `mapSuccessTo(actionType : String , [mapFn : Function<(payload : any) {} : any])`
 
 > This API is used to dispatch action when callbags chain is successed
 
 
 
-### `mapFailTo(actionType : String , [mapFn : Function<(payload : any) {} : any])`
+#### `mapFailTo(actionType : String , [mapFn : Function<(payload : any) {} : any])`
 
 > This API is used to dispatch action when callbags chain is failed
+
+
+
+## Q/A
+
+
+
+#### How to use pipline operator syntax?
+
+You can install the latest version of babel7(@babel/cli), and use @babel/plugin-proposal-pipeline-operator.
 
 
 
