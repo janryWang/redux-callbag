@@ -12,7 +12,7 @@
 
 ## Install
 
-```
+```sh
 npm install --save  redux-callbag
 ```
 
@@ -20,7 +20,7 @@ npm install --save  redux-callbag
 
 ## Usage
 
-```
+```js
 import { createStore, applyMiddleware } from "redux"
 import { pipe, filter, forEach, map } from "callbag-basics"
 import createCallbagMiddleware, {
