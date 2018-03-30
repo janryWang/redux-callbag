@@ -2,11 +2,18 @@
   "name": "redux-callbag",
   "version": "0.1.2",
   "description": "redux callbag",
-  "main": "./lib",
+  "main": "dist/redux-callbag.js",
+  "module": "dist/redux-callbag.es.js",
   "scripts": {
-    "test": "babel-node test.js --presets @babel/preset-env --plugins @babel/plugin-proposal-pipeline-operator",
-    "build": "babel index.js --out-dir lib  --presets @babel/preset-env --plugins @babel/plugin-proposal-pipeline-operator"
+    "test": "cross-env NODE_ENV=test babel-node test.js",
+    "prebuild": "rimraf dist",
+    "build": "rollup -c",
+    "prepare": "npm test && npm run build"
   },
+  "files": [
+    "dist",
+    "logo.jpg"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/janryWang/redux-callbag.git"
@@ -23,14 +30,18 @@
     "callbag-map-promise": "0.1.x"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.42",
-    "@babel/core": "^7.0.0-beta.42",
-    "@babel/node": "^7.0.0-beta.42",
-    "@babel/plugin-proposal-pipeline-operator": "^7.0.0-beta.42",
-    "@babel/preset-env": "^7.0.0-beta.42",
+    "@babel/core": "7.0.0-beta.42",
+    "@babel/node": "7.0.0-beta.42",
+    "@babel/plugin-proposal-pipeline-operator": "7.0.0-beta.42",
+    "@babel/plugin-transform-modules-commonjs": "7.0.0-beta.42",
+    "@babel/preset-env": "7.0.0-beta.42",
     "callbag-basics": "^3.0.0",
     "callbag-delay": "^0.1.0",
     "callbag-timer": "^1.0.0",
-    "redux": "^3.7.2"
+    "cross-env": "^5.1.4",
+    "redux": "^3.7.2",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.57.1",
+    "rollup-plugin-babel": "4.0.0-beta.3"
   }
 }

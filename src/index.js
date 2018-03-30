@@ -13,9 +13,9 @@ export default (...epicses) => {
             sink(0, (t,d) => {
                 if (t === 2) emitter.off("action", handler)
                 if (t === 1) {
-					if(d && d.action){
-						store.dispatch(d.action)
-					}
+                    if(d && d.action){
+                        store.dispatch(d.action)
+                    }
                 }
             })
             emitter.on("action", handler)
