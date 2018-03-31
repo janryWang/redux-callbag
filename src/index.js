@@ -2,7 +2,9 @@ import mitt from "mitt"
 import mapPromise from "callbag-map-promise"
 import filter from "callbag-filter"
 
-const isFn = val=>typeof val === 'function'
+const isFn = val => typeof val === "function"
+
+export const INIT_TYPE = "@REDUX_CALLBG_INIT@"
 
 export default (...epicses) => {
     return store => {
@@ -10,10 +12,10 @@ export default (...epicses) => {
         const actions = (start, sink) => {
             if (start !== 0) return
             const handler = ev => sink(1, ev)
-            sink(0, (t,d) => {
+            sink(0, (t, d) => {
                 if (t === 2) emitter.off("action", handler)
                 if (t === 1) {
-                    if(d && d.action){
+                    if (d && d.action) {
                         store.dispatch(d.action)
                     }
                 }
@@ -27,6 +29,10 @@ export default (...epicses) => {
             }
         })
 
+        emitter.emit("action", {
+            type: INIT_TYPE
+        })
+
         return next => {
             return action => {
                 emitter.emit("action", action)
@@ -38,13 +44,13 @@ export default (...epicses) => {
 
 export const mapFromPromise = mapPromise
 
-export const select = _type => source => {
+export const select = (_type = INIT_TYPE) => source => {
     return filter(({ type }) => {
         return type === _type
     })(source)
 }
 
-export const mapSuccessTo = (actionType,fn) => source => {
+export const mapSuccessTo = (actionType, fn) => source => {
     let talkback
 
     source(0, (t, d) => {
@@ -70,7 +76,7 @@ export const mapSuccessTo = (actionType,fn) => source => {
     }
 }
 
-export const mapFailTo = (actionType,fn) => source => {
+export const mapFailTo = (actionType, fn) => source => {
     let talkback
 
     source(0, (t, d) => {
@@ -82,7 +88,7 @@ export const mapFailTo = (actionType,fn) => source => {
             talkback(1, {
                 action: {
                     type: actionType,
-                    payload : isFn(fn) ? fn(d.payload) : d
+                    payload: isFn(fn) ? fn(d.payload) : d
                 }
             })
         }

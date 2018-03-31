@@ -19,6 +19,10 @@
 npm install --save  redux-callbag
 ```
 
+## Try it online
+
+- [async-redux-callbag](https://codesandbox.io/s/x2rm1vq4mz)
+
 
 
 ## Usage
@@ -113,9 +117,11 @@ store.subscribe(()=>{
 
 
 
-#### `select(actionType : String , [mapFn : Function<(payload : any){} : any>]) : Function`
+#### `select([actionType : String , mapFn : Function<(payload : any){} : any>]) : Function`
 
 > This API is used to select action
+>
+> If actionType is undefined, it is equivalent to select to initialize the action
 
 
 
