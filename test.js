@@ -1,3 +1,4 @@
+import test from "ava"
 import { createStore, applyMiddleware } from "redux"
 import { pipe, filter, forEach, map } from "callbag-basics"
 import createCallbagMiddleware, {
@@ -5,10 +6,10 @@ import createCallbagMiddleware, {
     mapFromPromise,
     mapSuccessTo,
     mapFailTo
-} from "./src"
-import delay from 'callbag-delay'
+} from "./dist/redux-callbag"
+import delay from "callbag-delay"
 
-const  todos = (state = [], action)=> {
+const todos = (state = [], action) => {
     switch (action.type) {
         case "ADD_TODO":
             return state.concat([action.payload])
@@ -21,27 +22,25 @@ const  todos = (state = [], action)=> {
     }
 }
 
-const addTodo = (payload)=> {
+const addTodo = payload => {
     return {
         type: "ADD_TODO",
         payload
     }
 }
 
-const addSomething = (payload)=> {
+const addSomething = payload => {
     return {
         type: "ADD_SOMETHING",
         payload
     }
 }
 
-const removeTodo = ()=> {
+const removeTodo = () => {
     return {
         type: "REMOVE_TODO"
     }
 }
-
-
 
 const store = createStore(
     todos,
@@ -58,7 +57,10 @@ const store = createStore(
             actions
                 |> select("ADD_TODO")
                 |> delay(1000)
-                |> mapSuccessTo("ADD_SOMETHING",(payload)=>payload + "  23333333")
+                |> mapSuccessTo(
+                    "ADD_SOMETHING",
+                    payload => payload + "  23333333"
+                )
         })
     )
 )
@@ -66,8 +68,21 @@ const store = createStore(
 store.dispatch(addTodo("Hello redux"))
 store.dispatch(addSomething("This will not add numbers"))
 
-console.log(store.getState())
-
-store.subscribe(()=>{
-    console.log(store.getState())
+test("sync", t => {
+    t.deepEqual(store.getState(), [
+        "Hello world",
+        "Hello redux",
+        "This will not add numbers"
+    ])
+})
+test.cb("async", t => {
+    store.subscribe(() => {
+        t.deepEqual(store.getState(), [
+            "Hello world",
+            "Hello redux",
+            "This will not add numbers",
+            "Hello redux  23333333"
+        ])
+        t.end()
+    })
 })
