@@ -5,11 +5,10 @@
   "main": "dist/redux-callbag.js",
   "module": "dist/redux-callbag.es.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test npm run build && ava",
+    "test": "npm run build && cross-env NODE_ENV=test ava",
     "prebuild": "rimraf dist",
     "build": "rollup -c",
-    "prepare": "npm test && npm run build",
-    "precommit": "lint-staged && npm run prepare"
+    "precommit": "lint-staged && npm run test"
   },
   "files": [
     "dist",
