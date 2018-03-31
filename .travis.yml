@@ -1,0 +1,10 @@
+sudo: required
+language: node_js
+node_js:
+- v8.0.0
+
+before_install:
+script:
+- |
+    npm install
+    npm test
