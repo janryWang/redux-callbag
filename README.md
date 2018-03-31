@@ -1,3 +1,6 @@
+[![npm version](https://badge.fury.io/js/redux-callbag.svg)](https://badge.fury.io/js/redux-callbag)
+[![Build Status](https://travis-ci.org/janryWang/redux-callbag.svg)](https://travis-ci.org/janryWang/redux-callbag)
+
 # <img src="./logo.jpg" width="400">
 
 > Redux middleware for action side effects with [callbag](https://github.com/callbag/callbag)
