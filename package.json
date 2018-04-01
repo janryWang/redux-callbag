@@ -1,6 +1,6 @@
 {
   "name": "redux-callbag",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "redux callbag",
   "main": "dist/redux-callbag.js",
   "module": "dist/redux-callbag.es.js",
