@@ -1,6 +1,6 @@
 {
   "name": "redux-callbag",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "redux callbag",
   "main": "dist/redux-callbag.js",
   "module": "dist/redux-callbag.es.js",
@@ -26,8 +26,9 @@
   "homepage": "https://github.com/janryWang/redux-callbag#readme",
   "dependencies": {
     "callbag-filter": "^1.0.1",
-    "mitt": "^1.1.3",
-    "callbag-map-promise": "0.1.x"
+    "callbag-map-promise": "0.1.x",
+    "callbag-share": "^1.0.0",
+    "mitt": "^1.1.3"
   },
   "devDependencies": {
     "@babel/core": "7.0.0-beta.42",

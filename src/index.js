@@ -1,6 +1,7 @@
 import mitt from "mitt"
 import mapPromise from "callbag-map-promise"
 import filter from "callbag-filter"
+import share from "callbag-share"
 
 const isFn = val => typeof val === "function"
 const getPayload = d => (d && d.payload !== undefined ? d.payload : d)
@@ -10,7 +11,7 @@ export const INIT_TYPE = "@REDUX_CALLBAG_INIT@"
 export default (...epicses) => {
     return store => {
         const emitter = mitt()
-        const actions = (start, sink) => {
+        const actions = share((start, sink) => {
             if (start !== 0) return
             const handler = ev => sink(1, ev)
             sink(0, (t, d) => {
@@ -19,7 +20,7 @@ export default (...epicses) => {
                 }
             })
             emitter.on("action", handler)
-        }
+        })
 
         actions.select = (_type = INIT_TYPE) => source => {
             return filter(({ type }) => {
