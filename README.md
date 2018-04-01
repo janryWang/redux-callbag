@@ -30,12 +30,7 @@ npm install --save  redux-callbag
 ```js
 import { createStore, applyMiddleware } from "redux"
 import { pipe, filter, forEach, map } from "callbag-basics"
-import createCallbagMiddleware, {
-    select,
-    mapFromPromise,
-    mapSuccessTo,
-    mapFailTo
-} from "./index"
+import createCallbagMiddleware from "./index"
 import delay from 'callbag-delay'
 
 const  todos = (state = [], action)=> {
@@ -78,6 +73,13 @@ const store = createStore(
     ["Hello world"],
     applyMiddleware(
         createCallbagMiddleware((actions, store) => {
+            const {
+                select,
+                mapPromise,
+                mapSuccessTo,
+                mapFailTo
+            } = actions
+            
             actions
                 |> select("ADD_SOMETHING")
                 |> delay(1000)
@@ -88,6 +90,7 @@ const store = createStore(
             actions
                 |> select("ADD_TODO")
                 |> delay(1000)
+                |> mapPromise((d)=>fetch('/xxxx',{data:d}).then(res=>res.json()))
                 |> mapSuccessTo("ADD_SOMETHING",(payload)=>payload + "  23333333")
         })
     )
@@ -117,7 +120,7 @@ store.subscribe(()=>{
 
 
 
-#### `select([actionType : String , mapFn : Function<(payload : any){} : any>]) : Function`
+#### `actions.select([actionType : String , mapFn : Function<(payload : any){} : any>]) : Function`
 
 > This API is used to select action
 >
@@ -125,19 +128,19 @@ store.subscribe(()=>{
 
 
 
-#### `mapFromPromise(mapFn : Function<(payload : any) {} : any>) : Function `
+#### `actions.mapPromise(mapFn : Function<(payload : any) {} : any>) : Function `
 
 > This API is used to insert promise flow
 
 
 
-#### `mapSuccessTo(actionType : String , [mapFn : Function<(payload : any) {} : any])`
+#### `actions.mapSuccessTo(actionType : String , [mapFn : Function<(payload : any) {} : any])`
 
 > This API is used to dispatch action when callbags chain is successed
 
 
 
-#### `mapFailTo(actionType : String , [mapFn : Function<(payload : any) {} : any])`
+#### `actions.mapFailTo(actionType : String , [mapFn : Function<(payload : any) {} : any])`
 
 > This API is used to dispatch action when callbags chain is failed
 

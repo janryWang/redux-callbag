@@ -1,12 +1,7 @@
 import test from "ava"
 import { createStore, applyMiddleware } from "redux"
 import { pipe, filter, forEach, map } from "callbag-basics"
-import createCallbagMiddleware, {
-    select,
-    mapFromPromise,
-    mapSuccessTo,
-    mapFailTo
-} from "./dist/redux-callbag"
+import createCallbagMiddleware from "./dist/redux-callbag"
 import delay from "callbag-delay"
 
 const todos = (state = [], action) => {
@@ -17,6 +12,9 @@ const todos = (state = [], action) => {
             return []
         case "ADD_SOMETHING":
             return state.concat([action.payload])
+        case "AAAAA":
+            console.log(action)
+            return state
         default:
             return state
     }
@@ -47,6 +45,10 @@ const store = createStore(
     ["Hello world"],
     applyMiddleware(
         createCallbagMiddleware((actions, store) => {
+            const { select, mapSuccessTo, mapPromise } = actions
+
+            actions |> select() |> mapPromise(d => 123) |> mapSuccessTo("AAAAA")
+
             actions
                 |> select("ADD_SOMETHING")
                 |> delay(1000)
