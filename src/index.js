@@ -4,7 +4,7 @@ import filter from "callbag-filter"
 
 const isFn = val => typeof val === "function"
 
-export const INIT_TYPE = "@REDUX_CALLBG_INIT@"
+export const INIT_TYPE = "@REDUX_CALLBAG_INIT@"
 
 export default (...epicses) => {
     return store => {
@@ -13,7 +13,9 @@ export default (...epicses) => {
             if (start !== 0) return
             const handler = ev => sink(1, ev)
             sink(0, (t, d) => {
-                if (t === 2) emitter.off("action", handler)
+                if (t === 2) {
+                    emitter.off("action", handler)
+                }
                 if (t === 1) {
                     if (d && d.action) {
                         store.dispatch(d.action)
@@ -50,6 +52,8 @@ export const select = (_type = INIT_TYPE) => source => {
     })(source)
 }
 
+const getPayload = d => (d && d.payload !== undefined ? d.payload : d)
+
 export const mapSuccessTo = (actionType, fn) => source => {
     let talkback
 
@@ -62,7 +66,7 @@ export const mapSuccessTo = (actionType, fn) => source => {
             talkback(1, {
                 action: {
                     type: actionType,
-                    payload: isFn(fn) ? fn(d.payload) : d
+                    payload: isFn(fn) ? fn(getPayload(d)) : getPayload(d)
                 }
             })
         }
@@ -88,7 +92,7 @@ export const mapFailTo = (actionType, fn) => source => {
             talkback(1, {
                 action: {
                     type: actionType,
-                    payload: isFn(fn) ? fn(d.payload) : d
+                    payload: isFn(fn) ? fn(getPayload(d)) : getPayload(d)
                 }
             })
         }
