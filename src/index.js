@@ -22,9 +22,13 @@ export default (...epicses) => {
             emitter.on("action", handler)
         })
 
-        actions.select = (_type = INIT_TYPE) => source => {
+        actions.select = (...types) => source => {
+            if (types.length == 0) types = [INIT_TYPE]
             return filter(({ type }) => {
-                return type === _type
+                return types.some(_type => {
+                    if (_type == "INIT") _type = INIT_TYPE
+                    return _type == type
+                })
             })(source)
         }
 
