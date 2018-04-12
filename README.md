@@ -120,11 +120,11 @@ store.subscribe(()=>{
 
 
 
-#### `actions.select([actionType : String , mapFn : Function<(payload : any){} : any>]) : Function`
+#### `actions.select([...actionType : String]) : Function`
 
 > This API is used to select action
 >
-> If actionType is undefined, it is equivalent to select to initialize the action
+> If action-type is undefined, it is equivalent to select to initialize the action, as you can pass multiple action-types
 
 
 
