@@ -1,5 +1,5 @@
 [![npm version](https://badge.fury.io/js/redux-callbag.svg)](https://badge.fury.io/js/redux-callbag)
-[![Build Status](https://travis-ci.org/janryWang/redux-callbag.svg)](https://travis-ci.org/janryWang/redux-callbag)
+[![Build Status](https://travis-ci.org/janryWang/redux-callbag.svg)](https://travis-ci.org/janryWang/redux-callbag) [![Greenkeeper badge](https://badges.greenkeeper.io/janryWang/redux-callbag.svg)](https://greenkeeper.io/)
 
 # <img src="./logo.jpg" width="400">
 
